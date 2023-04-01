@@ -6,10 +6,10 @@ namespace Atea.Homework;
 
 public class Log : ITableEntity
 {
-    public bool IsSuccess { get; set; }
-    public string Endpoint { get; set; }
-    public string BlobName { get; set; }
-    public DateTimeOffset CreatedAt { get; set; }
+    public bool IsSuccess { get; }
+    public string Endpoint { get; }
+    public string BlobName { get; }
+    public DateTimeOffset CreatedAt { get; }
 
     public string PartitionKey { get; set; }
     public string RowKey { get; set; }

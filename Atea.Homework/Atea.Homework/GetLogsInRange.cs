@@ -28,15 +28,10 @@ public static class GetLogsInRange
             return new BadRequestObjectResult("Missing from/to dates!");
         }
 
-        DateTimeOffset dtoFrom;
-        DateTimeOffset dtoTo;
+        var dtoFrom = HelperMethods.ParseDto(from);
+        var dtoTo = HelperMethods.ParseDto(to);
         
-        try
-        {
-            dtoFrom = DateTimeOffset.ParseExact(from, "dd-MM-yyyy", null);
-            dtoTo = DateTimeOffset.ParseExact(to, "dd-MM-yyyy", null);
-        }
-        catch (FormatException)
+        if(dtoFrom == null || dtoTo == null)
         {
             return new BadRequestObjectResult("Bad date format! Please use \"DD-MM-YYYY\"");
         }
@@ -51,13 +46,13 @@ public static class GetLogsInRange
             TableQuery.GenerateFilterConditionForDate(
                 "CreatedAt",
                 QueryComparisons.GreaterThanOrEqual,
-                dtoFrom
+                (DateTimeOffset)dtoFrom
             ),
             TableOperators.And,
             TableQuery.GenerateFilterConditionForDate(
                 "CreatedAt",
                 QueryComparisons.LessThanOrEqual,
-                dtoTo
+                (DateTimeOffset)dtoTo
             )
         );
 
