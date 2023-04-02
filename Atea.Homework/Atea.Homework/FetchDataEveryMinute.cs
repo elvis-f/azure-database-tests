@@ -35,6 +35,7 @@ public static class FetchDataEveryMinute
             : HelperMethods.GenerateStreamFromString("Bad request!");
 
         await blobContainer.UploadAsync(responseStream, true);
+        log.LogInformation($"New blob uploaded at: http://localhost:7071/api/GetBlob?blob={blobName}");
         
         // Handle table stuff
         var tableConnectionString = "UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://127.0.0.1";
@@ -42,6 +43,8 @@ public static class FetchDataEveryMinute
         
         var tableClient = new TableClient(tableConnectionString, tableName);
         await tableClient.CreateIfNotExistsAsync();
+        
+        log.LogInformation($"Making new Log: {DateTimeOffset.Now:d} {DateTimeOffset.Now.Offset}|{httpResponse.IsSuccessStatusCode}|{endpoint} {blobName}");
         
         var newLog = new Log(httpResponse.IsSuccessStatusCode, endpoint, blobName);
         await tableClient.AddEntityAsync(newLog);

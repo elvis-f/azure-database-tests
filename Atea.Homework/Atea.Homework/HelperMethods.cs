@@ -19,18 +19,11 @@ public class HelperMethods
         return Encoding.UTF8.GetString(stream.ToArray());
     }
 
-    public static DateTimeOffset? ParseDto(string str, string format = "dd-MM-YYYY")
+    public static DateTimeOffset ParseDto(string str, string format = "dd-MM-yyyy")
     {
-        try
-        {
-            return DateTimeOffset.ParseExact(str, format, null);
-        }
-        catch (FormatException)
-        {
-            return null;
-        }
+        return DateTimeOffset.ParseExact(str, format, null);
     }
-    
+
     public static Stream GenerateStreamFromString(string s)
     {
         var stream = new MemoryStream();
