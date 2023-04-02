@@ -26,24 +26,18 @@ public static class GetLogsInRange
 
         var from = HelperMethods.GetParameter(req, "from");
         var to = HelperMethods.GetParameter(req, "to");
-        
+
         if (from == null || to == null)
         {
             return new BadRequestObjectResult("Missing from/to dates!");
         }
 
-        DateTimeOffset dtoFrom;
-        DateTimeOffset dtoTo;
-        
-        try
-        {
-            dtoFrom = HelperMethods.ParseDto(from);
-            dtoTo = HelperMethods.ParseDto(to);
+        var dtoFrom = HelperMethods.ParseDto(from) ?? new DateTimeOffset();
+        var dtoTo = HelperMethods.ParseDto(to) ?? new DateTimeOffset();
 
-        }
-        catch (FormatException)
+        if (dtoFrom == new DateTimeOffset() || dtoTo == new DateTimeOffset())
         {
-            return new BadRequestObjectResult("Bad date format! Please use DD-MM-YYYY");
+            return new BadRequestObjectResult("Bad date! Please use mm-DD-yyyy format in your GET request!!");
         }
 
         var tableConnectionString = "UseDevelopmentStorage=true;DevelopmentStorageProxyUri=http://127.0.0.1";
@@ -51,9 +45,7 @@ public static class GetLogsInRange
         
         var tableClient = new TableClient(tableConnectionString, tableName);
         await tableClient.CreateIfNotExistsAsync();
-        
-        log.LogInformation($"From: {dtoFrom:d} {dtoFrom.Offset}, To: {dtoTo:d} {dtoTo.Offset}");
-        
+
         var filter = TableQuery.CombineFilters(
             TableQuery.GenerateFilterConditionForDate(
                 "CreatedAt",
