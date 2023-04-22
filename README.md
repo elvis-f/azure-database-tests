@@ -1,5 +1,7 @@
 # Azure tests
 
+![Azure logo](https://upload.wikimedia.org/wikipedia/commons/a/a8/Microsoft_Azure_Logo.svg)
+
 Basic azure project to strengthen my understanding of Azure services and .NET functionality
 
 # How to run
