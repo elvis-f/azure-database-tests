@@ -10,8 +10,9 @@ Clone this project into your repository:
 `git clone https://github.com/elvis-f/azure-database-tests`
 
 Navigate inside of the folder and then run it:
-```
-cd azure-database
+```bash
+cd test-projects
+cd #specific-project-name
 dotnet run
 ```
 
