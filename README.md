@@ -1,3 +1,18 @@
-# atea-homework
+# Azure tests
 
-Hello potential employer this is my attempt to convince you to give me a job!
+Basic azure project to strengthen my understanding of Azure services and .NET functionality
+
+# How to run
+
+Clone this project into your repository:
+`git clone https://github.com/elvis-f/azure-database-tests`
+
+Navigate inside of the folder and then run it:
+```
+cd azure-database
+dotnet run
+```
+
+# Azurite
+
+This version uses Azurite local storage emulation, if there is a need to connect to a live Azure instance then edit `blobConnectionString` to have your Azure credidentials (USE A REFERENCE TO A SECRET STORAGE, DONT STORE YOUR CONNECTION STRING IN CODE!!!)
